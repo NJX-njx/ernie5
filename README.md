@@ -25,7 +25,7 @@ ernie5/
 ### 1. 安装依赖
 
 ```bash
-pip install torch numpy tqdm tokenizers
+pip install -r requirements.txt
 ```
 
 ### 2. 运行预训练模拟
@@ -52,6 +52,14 @@ config = ERNIE5Config.from_scale(ModelScale.SMALL)
 config.moe.num_experts = 32
 config.moe.top_k = 4
 ```
+
+### 4. 运行测试
+
+```bash
+pytest
+```
+
+说明：若环境缺少 `torch`，与 `torch` 强相关的测试会被自动跳过。
 
 ## 实现细节
 

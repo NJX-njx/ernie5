@@ -1,14 +1,12 @@
 import torch
-import torch.nn as nn
 from torch.utils.data import DataLoader
-from typing import Optional, Dict
+from typing import Optional
 from tqdm import tqdm
 import os
 
 from ernie5.models.backbone import ERNIE5ForCausalLM
 from ernie5.configs.training_config import TrainingConfig
 from ernie5.training.scheduler import WSDScheduler, CosineScheduler
-from ernie5.training.losses import NextGroupTokenLoss
 
 class ERNIE5Trainer:
     """
@@ -51,14 +49,9 @@ class ERNIE5Trainer:
             num_training_steps=max(1, config.stage2_steps)
         )
         
-        # Loss Function
-        self.criterion = NextGroupTokenLoss()
-        
     def train(self):
         self.model.train()
         global_step = 0
-        total_loss = 0.0
-        
         # Progress Bar
         progress_bar = tqdm(total=self.config.max_steps, desc="Training")
         
@@ -88,18 +81,6 @@ class ERNIE5Trainer:
             audio_labels = maybe_to_device("audio_labels")
             
             # Forward
-            # 对于简化版，Backbone forward returns (loss, logits) if labels provided
-            # 但我们需要多模态 Loss，所以 Backbone 的 forward 需要更灵活
-            # 这里简化：假设 ERNIE5ForCausalLM 主要计算 Text Loss
-            # Visual/Audio Heads 需要单独调用
-            
-            # 我们直接调用 model(input_ids) 得到 hidden_states
-            # 然后手动调各 Head? 或者集成在 model forward 里?
-            # 简单起见，假设 ERNIE5ForCausalLM.forward 已经集成了所有Head计算并返回各自 Loss (如果实现很完整)
-            # 但目前 backbone.py 里只返回了 Text Loss。
-            
-            # 正确做法：修改 ERNIE5ForCausalLM 以包含 VisualGenerator 等
-            
             loss, logits = self.model(
                 input_ids,
                 labels=labels,

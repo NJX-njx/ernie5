@@ -28,7 +28,7 @@ class _FakeTokenizerBackend:
 
 def test_collator_masks_padding_labels_to_ignore_index():
     cfg = ERNIE5Config.from_scale(ModelScale.MINI)
-    tk = TextTokenizer(TokenizerConfig(vocab_file=None))
+    tk = TextTokenizer(TokenizerConfig(vocab_file=None, utf16be_fallback=False))
     # 避免依赖真实 tokenizers 训练流程，直接替换 backend
     tk._tokenizer = _FakeTokenizerBackend()
 
