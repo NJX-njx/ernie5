@@ -33,3 +33,8 @@ def __getattr__(name: str):
             "ERNIE5ForCausalLM": ERNIE5ForCausalLM,
         }[name]
     raise AttributeError(f"module 'ernie5' has no attribute '{name}'")
+
+
+def __dir__():
+    """支持 dir() 和 IDE 自动补全。"""
+    return __all__
