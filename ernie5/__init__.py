@@ -36,5 +36,5 @@ def __getattr__(name: str):
 
 
 def __dir__():
-    """支持 dir() 和 IDE 自动补全。"""
+    """Support dir() and IDE autocompletion."""
     return __all__

@@ -35,7 +35,7 @@ def resolve_scale(scale: str) -> ModelScale:
         return scale_map[scale]
     except KeyError:
         valid_scales = ", ".join(scale_map.keys())
-        raise ValueError(f"Invalid scale '{scale}'. Expected one of: {valid_scales}.") from None
+        raise ValueError(f"Invalid scale '{scale}'. Expected one of: {valid_scales}") from None
 
 
 def main(argv: Optional[list[str]] = None) -> None:
