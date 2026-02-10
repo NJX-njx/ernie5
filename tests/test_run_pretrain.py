@@ -18,4 +18,10 @@ def test_resolve_scale_mapping():
     assert resolve_scale("mini") == ModelScale.MINI
     assert resolve_scale("small") == ModelScale.SMALL
     assert resolve_scale("medium") == ModelScale.MEDIUM
+    assert resolve_scale("large") == ModelScale.LARGE
     assert resolve_scale("full") == ModelScale.FULL
+
+
+def test_resolve_scale_raises_clear_error_for_invalid_scale():
+    with pytest.raises(ValueError, match="Invalid scale 'invalid'. Expected one of"):
+        resolve_scale("invalid")

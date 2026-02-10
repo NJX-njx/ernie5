@@ -11,7 +11,7 @@ def build_parser() -> argparse.ArgumentParser:
         "--scale",
         type=str,
         default="mini",
-        choices=["mini", "small", "medium", "full"],
+        choices=["mini", "small", "medium", "large", "full"],
         help="Model scale",
     )
     return parser
@@ -28,9 +28,14 @@ def resolve_scale(scale: str) -> ModelScale:
         "mini": ModelScale.MINI,
         "small": ModelScale.SMALL,
         "medium": ModelScale.MEDIUM,
+        "large": ModelScale.LARGE,
         "full": ModelScale.FULL,
     }
-    return scale_map[scale]
+    try:
+        return scale_map[scale]
+    except KeyError:
+        valid_scales = ", ".join(scale_map.keys())
+        raise ValueError(f"Invalid scale '{scale}'. Expected one of: {valid_scales}") from None
 
 
 def main(argv: Optional[list[str]] = None) -> None:
