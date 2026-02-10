@@ -13,7 +13,7 @@ def test_package_has_lazy_model_getattr():
     import sys
     
     # Remove torch from sys.modules if present to verify lazy loading
-    torch_module_keys = [k for k in list(sys.modules.keys()) if k == "torch" or k.startswith("torch.")]
+    torch_module_keys = [k for k in sys.modules if k == "torch" or k.startswith("torch.")]
     torch_modules_backup = {k: sys.modules[k] for k in torch_module_keys}
     for module_name in torch_module_keys:
         del sys.modules[module_name]
