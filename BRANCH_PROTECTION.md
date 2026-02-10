@@ -39,10 +39,10 @@
 - 启用此选项以要求CI/CD检查通过
 - ✅ **Require branches to be up to date before merging**: 要求分支在合并前是最新的
 - 添加必需的状态检查：
-  - `test (3.8)` - Python 3.8测试
   - `test (3.9)` - Python 3.9测试
   - `test (3.10)` - Python 3.10测试
   - `test (3.11)` - Python 3.11测试
+  - `test (3.12)` - Python 3.12测试
   - `lint` - 代码质量检查
 
 **✅ Require conversation resolution before merging (合并前需要解决所有对话)**
@@ -119,7 +119,7 @@
 项目配置了以下自动化检查（参见 `.github/workflows/ci.yml`）：
 
 ### 测试 (Test)
-- 在多个Python版本（3.8, 3.9, 3.10, 3.11）上运行测试套件
+- 在多个Python版本（3.9, 3.10, 3.11, 3.12）上运行测试套件
 - 生成代码覆盖率报告
 - 必须全部通过才能合并
 

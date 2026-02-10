@@ -14,7 +14,7 @@
 
 #### ✅ CI/CD工作流
 **文件**: `.github/workflows/ci.yml`
-- **测试任务**: 在 Python 3.8, 3.9, 3.10, 3.11 上运行
+- **测试任务**: 在 Python 3.9, 3.10, 3.11, 3.12 上运行
 - **代码质量检查**: Black, isort, Flake8
 - **代码覆盖率**: 使用 pytest-cov 生成报告
 - 所有检查必须通过才能合并
@@ -102,7 +102,7 @@
      - Require review from Code Owners
    - ✅ Require status checks to pass before merging
      - Require branches to be up to date
-     - 必需检查：test (3.8), test (3.9), test (3.10), test (3.11), lint
+     - 必需检查：test (3.9), test (3.10), test (3.11), test (3.12), lint
    - ✅ Require conversation resolution before merging
    - ✅ Include administrators
 
