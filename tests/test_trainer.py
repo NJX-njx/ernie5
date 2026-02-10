@@ -4,8 +4,8 @@ torch = pytest.importorskip("torch")
 
 from torch.utils.data import DataLoader
 
-from ernie5.training.trainer import ERNIE5Trainer
 from ernie5.configs.training_config import TrainingConfig
+from ernie5.training.trainer import ERNIE5Trainer
 
 
 class _DummyModel(torch.nn.Module):

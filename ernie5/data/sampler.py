@@ -1,36 +1,39 @@
+from typing import Iterator, List, Optional
+
+import numpy as np
 import torch
 from torch.utils.data import Sampler
-from typing import List, Iterator, Optional
-import numpy as np
+
 
 class MultiModalSampler(Sampler):
     """
     多模态混合采样器
-    
+
     支持按比例从不同数据源采样 (Text, Image-Text, Video-Text, etc.)
     """
+
     def __init__(
-        self, 
-        dataset_sizes: List[int], 
-        weights: List[float], 
+        self,
+        dataset_sizes: List[int],
+        weights: List[float],
         batch_size: int,
-        drop_last: bool = False
+        drop_last: bool = False,
     ):
         self.dataset_sizes = dataset_sizes
         self.weights = torch.tensor(weights, dtype=torch.float)
-        self.weights = self.weights / self.weights.sum() # Normalize
+        self.weights = self.weights / self.weights.sum()  # Normalize
         self.batch_size = batch_size
         self.drop_last = drop_last
-        
+
         self.total_size = sum(dataset_sizes)
-        
+
     def __iter__(self):
         # 简单策略：每一批次根据权重选择一个 Source，然后从该 Source 采样 Batch
         # 或者：更加细粒度，混合 Batch
-        
+
         # 模拟无限流采样逻辑，或者基于 Epoch 的逻辑
         # 这里实现基于 Epoch 的逻辑：生成所有索引
-        
+
         # 实际大规模训练通常是 Infinite Loop + Step limit
         # 返回全局索引，适配 MultiSourceDataset / ConcatDataset
         offsets = [0]
@@ -51,15 +54,17 @@ class MultiModalSampler(Sampler):
                 sample_idx = torch.randint(0, size, (1,)).item()
                 yield start + sample_idx
 
+
 class WeightedMixingSampler:
     """
     流式混合采样器逻辑 (用于 IterableDataset)
     """
+
     def __init__(self, datasets: List, weights: List[float]):
         self.datasets = datasets
         self.weights = weights
         self.iterators = [iter(d) for d in datasets]
-        
+
     def __iter__(self):
         while True:
             # 根据权重随机选择一个数据集

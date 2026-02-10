@@ -24,7 +24,9 @@ class UnifiedMultiModalRL:
 
     def sample(self, batch_size: int) -> List[Dict[str, Any]]:
         """从回放池中采样一个 mini-batch。"""
-        return random.sample(self.replay_buffer, min(len(self.replay_buffer), batch_size))
+        return random.sample(
+            self.replay_buffer, min(len(self.replay_buffer), batch_size)
+        )
 
     def compute_policy_loss(
         self,

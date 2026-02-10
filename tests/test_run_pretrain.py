@@ -1,7 +1,7 @@
 import pytest
 
-from run_pretrain import parse_args, resolve_scale
 from ernie5.configs import ModelScale
+from run_pretrain import parse_args, resolve_scale
 
 
 def test_parse_args_default_scale_is_mini():
