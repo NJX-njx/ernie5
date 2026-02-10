@@ -252,7 +252,15 @@ class ERNIE5ForCausalLM(nn.Module):
 
         loss = None
         if text_loss is not None or visual_loss is not None or audio_loss is not None or mtp_loss is not None:
-            loss = (text_loss or 0.0) + (visual_loss or 0.0) + (audio_loss or 0.0)
+            # NOTE:
+            # 不要使用 `(tensor or 0.0)` 聚合损失，这会触发
+            # `RuntimeError: Boolean value of Tensor with more than one value is ambiguous`。
+            # 这里显式地按 None 判断并逐项累加，保证训练稳定。
+            loss_terms = [
+                term for term in (text_loss, visual_loss, audio_loss)
+                if term is not None
+            ]
+            loss = sum(loss_terms) if loss_terms else torch.tensor(0.0, device=hidden_states.device)
             if mtp_loss is not None:
                 loss = loss + self.config.mtp_loss_weight * mtp_loss
 
