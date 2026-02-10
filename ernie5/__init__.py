@@ -26,7 +26,7 @@ def __getattr__(name: str):
         AttributeError: 当请求的属性不在支持列表中时抛出。
     """
     if name in {"ERNIE5Model", "ERNIE5ForCausalLM"}:
-        from ernie5.models import ERNIE5Model, ERNIE5ForCausalLM
+        from ernie5.models import ERNIE5ForCausalLM, ERNIE5Model
 
         return {
             "ERNIE5Model": ERNIE5Model,

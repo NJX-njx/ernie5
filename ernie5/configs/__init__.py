@@ -9,8 +9,8 @@ ERNIE 5.0 配置模块
 """
 
 from ernie5.configs.model_config import ERNIE5Config, ModelScale
-from ernie5.configs.training_config import TrainingConfig
 from ernie5.configs.tokenizer_config import TokenizerConfig
+from ernie5.configs.training_config import TrainingConfig
 
 __all__ = [
     "ERNIE5Config",

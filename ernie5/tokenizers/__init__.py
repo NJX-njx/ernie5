@@ -7,12 +7,12 @@ ERNIE 5.0 多模态Tokenizer模块
 - 音频Tokenizer (Codec风格 + RVQ)
 """
 
+from ernie5.tokenizers.audio_tokenizer import AudioTokenizer
 from ernie5.tokenizers.text_tokenizer import TextTokenizer
 from ernie5.tokenizers.visual_tokenizer import VisualTokenizer
-from ernie5.tokenizers.audio_tokenizer import AudioTokenizer
 
 __all__ = [
     "TextTokenizer",
-    "VisualTokenizer", 
+    "VisualTokenizer",
     "AudioTokenizer",
 ]

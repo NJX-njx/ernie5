@@ -8,9 +8,9 @@ ERNIE 5.0 数据处理模块
 - 交织多模态序列构建
 """
 
+from ernie5.data.collator import MultiModalCollator
 from ernie5.data.dataset import MultiModalDataset
 from ernie5.data.sampler import MultiModalSampler
-from ernie5.data.collator import MultiModalCollator
 
 __all__ = [
     "MultiModalDataset",

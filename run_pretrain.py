@@ -1,7 +1,7 @@
 import argparse
-from typing import Optional
+from typing import List, Optional
 
-from ernie5.configs import ERNIE5Config, TrainingConfig, TokenizerConfig, ModelScale
+from ernie5.configs import ERNIE5Config, ModelScale, TokenizerConfig, TrainingConfig
 
 
 def build_parser() -> argparse.ArgumentParser:
@@ -17,7 +17,7 @@ def build_parser() -> argparse.ArgumentParser:
     return parser
 
 
-def parse_args(argv: Optional[list[str]] = None) -> argparse.Namespace:
+def parse_args(argv: Optional[List[str]] = None) -> argparse.Namespace:
     """解析命令行参数，便于测试注入 argv。"""
     return build_parser().parse_args(argv)
 
@@ -35,16 +35,18 @@ def resolve_scale(scale: str) -> ModelScale:
         return scale_map[scale]
     except KeyError:
         valid_scales = ", ".join(scale_map.keys())
-        raise ValueError(f"Invalid scale '{scale}'. Expected one of: {valid_scales}") from None
+        raise ValueError(
+            f"Invalid scale '{scale}'. Expected one of: {valid_scales}"
+        ) from None
 
 
 def main(argv: Optional[list[str]] = None) -> None:
     # 延迟导入重依赖，使 parser 测试不依赖 torch。
     from torch.utils.data import DataLoader
 
+    from ernie5.data import MultiModalCollator, MultiModalIterableDataset
     from ernie5.models import ERNIE5ForCausalLM
-    from ernie5.tokenizers import TextTokenizer, VisualTokenizer, AudioTokenizer
-    from ernie5.data import MultiModalIterableDataset, MultiModalCollator
+    from ernie5.tokenizers import AudioTokenizer, TextTokenizer, VisualTokenizer
     from ernie5.training import ERNIE5Trainer
 
     args = parse_args(argv)
@@ -66,7 +68,9 @@ def main(argv: Optional[list[str]] = None) -> None:
 
     # 3. 数据准备
     dataset = MultiModalIterableDataset(file_paths=[], modality="text")
-    collator = MultiModalCollator(model_config, tokenizer, visual_tokenizer, audio_tokenizer)
+    collator = MultiModalCollator(
+        model_config, tokenizer, visual_tokenizer, audio_tokenizer
+    )
     dataloader = DataLoader(
         dataset,
         batch_size=training_config.per_device_train_batch_size,
