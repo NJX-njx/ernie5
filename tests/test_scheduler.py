@@ -25,7 +25,7 @@ def test_wsd_scheduler_phases():
     # warmup
     assert lrs[0] < lrs[1]
     # stable plateau
-    assert abs(lrs[1] - lrs[2]) < 1e-8
+    assert abs(lrs[2] - lrs[3]) < 1e-8
     # decay then floor
-    assert lrs[3] >= lrs[4] >= lrs[5]
+    assert lrs[4] >= lrs[5] >= lrs[6]
     assert lrs[-1] == 0.2
