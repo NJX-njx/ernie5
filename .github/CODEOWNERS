@@ -1,0 +1,21 @@
+# CODEOWNERS file for ERNIE5 repository
+# This file defines code ownership and review requirements
+# At least one code owner must approve changes before merging to main
+
+# Default owners for everything in the repo
+* @NJX-njx
+
+# Core model architecture requires careful review
+/ernie5/models/ @NJX-njx
+
+# Configuration changes need review
+/ernie5/configs/ @NJX-njx
+
+# Training code changes need review
+/ernie5/training/ @NJX-njx
+
+# Workflow and CI/CD changes
+/.github/ @NJX-njx
+
+# Documentation
+*.md @NJX-njx

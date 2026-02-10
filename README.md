@@ -72,6 +72,15 @@ pytest
 ### 音频生成
 位于 `ernie5/models/audio_generator.py`。实现了深度方向自回归循环，逐层预测残差 RVQ 码。
 
+## 贡献 (Contributing)
+
+我们欢迎所有形式的贡献！在提交代码前，请阅读以下文档：
+
+- [贡献指南 (CONTRIBUTING.md)](CONTRIBUTING.md) - 了解如何贡献代码
+- [分支保护指南 (BRANCH_PROTECTION.md)](BRANCH_PROTECTION.md) - 了解main分支保护规则
+
+**重要提示**: main分支受到保护，所有更改必须通过Pull Request提交，并需要通过代码审查和CI检查。
+
 ## 引用
 
 Based on: *ERNIE 5.0: A Unified Autoregressive Foundation Model for Understanding and Generation*
