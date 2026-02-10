@@ -223,8 +223,10 @@ class MultiModalCollator:
         visual_mask = torch.nn.utils.rnn.pad_sequence(visual_mask_list, batch_first=True, padding_value=False)
         audio_mask = torch.nn.utils.rnn.pad_sequence(audio_mask_list, batch_first=True, padding_value=False)
         
-        # Labels usually same as Input for AR (shifted inside model)
+        # Labels usually same as Input for AR (shifted inside model).
+        # 对于 padding 位置必须使用 -100 以避免被 CE loss 计入。
         labels = input_ids.clone()
+        labels[labels == self.pad_id] = -100
         visual_labels = torch.nn.utils.rnn.pad_sequence(visual_labels_list, batch_first=True, padding_value=-100)
         audio_labels = torch.nn.utils.rnn.pad_sequence(audio_labels_list, batch_first=True, padding_value=-100)
         

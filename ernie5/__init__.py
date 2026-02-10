@@ -12,10 +12,9 @@ ERNIE 5.0 - 统一多模态基础模型简化实现
 __version__ = "0.1.0"
 __author__ = "ERNIE 5.0 Implementation"
 
-from ernie5.models import ERNIE5Model
+# 仅导出轻量配置对象，避免在导入包时强依赖 torch。
 from ernie5.configs import ERNIE5Config
 
 __all__ = [
-    "ERNIE5Model",
     "ERNIE5Config",
 ]

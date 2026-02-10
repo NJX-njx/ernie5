@@ -74,13 +74,18 @@ class ERNIE5Trainer:
             # Move to device
             input_ids = batch["input_ids"].to(self.device)
             labels = batch["labels"].to(self.device)
-            position_ids = batch.get("position_ids").to(self.device)
-            attention_mask = batch.get("attention_mask").to(self.device)
-            text_mask = batch.get("text_mask").to(self.device)
-            visual_mask = batch.get("visual_mask").to(self.device)
-            audio_mask = batch.get("audio_mask").to(self.device)
-            visual_labels = batch.get("visual_labels").to(self.device)
-            audio_labels = batch.get("audio_labels").to(self.device)
+
+            def maybe_to_device(key: str):
+                value = batch.get(key)
+                return value.to(self.device) if value is not None else None
+
+            position_ids = maybe_to_device("position_ids")
+            attention_mask = maybe_to_device("attention_mask")
+            text_mask = maybe_to_device("text_mask")
+            visual_mask = maybe_to_device("visual_mask")
+            audio_mask = maybe_to_device("audio_mask")
+            visual_labels = maybe_to_device("visual_labels")
+            audio_labels = maybe_to_device("audio_labels")
             
             # Forward
             # 对于简化版，Backbone forward returns (loss, logits) if labels provided
@@ -120,7 +125,7 @@ class ERNIE5Trainer:
                 self.stage1_scheduler.step()
             else:
                 self.stage2_scheduler.step()
-            self.optimizer.zero_grad()
+            self.optimizer.zero_grad(set_to_none=True)
             
             global_step += 1
             progress_bar.update(1)
