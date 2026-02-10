@@ -10,11 +10,9 @@ ERNIE 5.0 多模态Tokenizer模块
 from ernie5.tokenizers.text_tokenizer import TextTokenizer
 from ernie5.tokenizers.visual_tokenizer import VisualTokenizer
 from ernie5.tokenizers.audio_tokenizer import AudioTokenizer
-from ernie5.tokenizers.unified_tokenizer import UnifiedTokenizer
 
 __all__ = [
     "TextTokenizer",
     "VisualTokenizer", 
     "AudioTokenizer",
-    "UnifiedTokenizer",
 ]

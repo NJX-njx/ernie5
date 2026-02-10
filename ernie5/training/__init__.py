@@ -9,7 +9,6 @@ ERNIE 5.0 训练模块
 - 统一多模态RL
 """
 
-from ernie5.training.trainer import ERNIE5Trainer
 from ernie5.training.scheduler import WSDScheduler, CosineScheduler
 from ernie5.training.elastic import ElasticTrainingManager
 from ernie5.training.losses import NextGroupTokenLoss
@@ -23,3 +22,11 @@ __all__ = [
     "NextGroupTokenLoss",
     "UnifiedMultiModalRL",
 ]
+
+
+def __getattr__(name: str):
+    """懒加载 Trainer 以避免循环导入。"""
+    if name == "ERNIE5Trainer":
+        from ernie5.training.trainer import ERNIE5Trainer
+        return ERNIE5Trainer
+    raise AttributeError(f"module 'ernie5.training' has no attribute '{name}'")
